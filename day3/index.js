@@ -1,5 +1,5 @@
 var dedupe = require('dedupe');
-var input = require('./input').split('');
+var input = require('../input')(3).split('');
 
 function Position(x, y) {
     this.x = x;

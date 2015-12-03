@@ -1,4 +1,4 @@
-var input = require('./input');
+var input = require('../input')(2);
 
 function toInt(arrayOfStrings) {
     return arrayOfStrings.map(function(e) {
