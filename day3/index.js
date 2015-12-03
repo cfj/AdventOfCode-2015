@@ -1,5 +1,5 @@
 var dedupe = require('dedupe');
-var input = require('./input');
+var input = require('./input').split('');
 
 function Position(x, y) {
     this.x = x;
@@ -9,10 +9,10 @@ function Position(x, y) {
 function walk(directions) {
     var positionsVisited = [];
     var currentPosition = new Position(0, 0);
-    
+
     positionsVisited.push(new Position(currentPosition.x, currentPosition.y));
 
-    directions.split('').forEach(function(direction) {
+    directions.forEach(function(direction) {
         switch(direction) {
             case '>':
                 currentPosition.x++;
@@ -36,13 +36,13 @@ function walk(directions) {
 
 var uniquePositions = dedupe(walk(input));
 
-var santaInput = input.split('').filter(function(e, i) {
+var santaInput = input.filter(function(e, i) {
     return i % 2 == 0;
-}).join('');
+});
 
-var roboSantaInput = input.split('').filter(function(e, i) {
+var roboSantaInput = input.filter(function(e, i) {
     return i % 2 !== 0;
-}).join('');
+});
 
 var combinedPositions = walk(santaInput).concat(walk(roboSantaInput));
 var uniqueCombinedPositions = dedupe(combinedPositions);
