@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "dedupe": "^1.0.2"
+    "dedupe": "^1.0.2",
+    "md5": "^2.0.0"
   },
   "devDependencies": {},
   "scripts": {
