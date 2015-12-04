@@ -18,7 +18,7 @@ class Program
         int num = 1;
         string target = new string('0', difficulty);
 
-        while (!ComputeMd5Hash(String.Format("{0}{1}", input, num)).Substring(0, difficulty).Equals(target))
+        while (!ComputeMd5Hash(String.Format("{0}{1}", input, num)).StartsWith(target))
         {
             num++;
         }
