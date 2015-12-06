@@ -53,29 +53,5 @@ function hasRepeatingSeparatedCharacters(string) {
     return false;
 }
 
-function getNumberOfNiceStringsPart1(stringList) {
-    var numNiceStringsPart1 = 0;
-
-    stringList.forEach(function(string) {
-        if(isNiceStringPart1(string)) {
-            numNiceStringsPart1++;
-        }
-    });
-
-    return numNiceStringsPart1;
-}
-
-function getNumberOfNiceStringsPart2(stringList) {
-    var numNiceStringsPart2 = 0;
-
-    stringList.forEach(function(string) {
-        if(isNiceStringPart2(string)) {
-            numNiceStringsPart2++;
-        }
-    });
-
-    return numNiceStringsPart2;
-}
-
-console.log(getNumberOfNiceStringsPart1(input.split('\n'))); //236
-console.log(getNumberOfNiceStringsPart2(input.split('\n'))); //51
+console.log(input.split('\n').filter(function(e) {return isNiceStringPart1(e);}).length); //236
+console.log(input.split('\n').filter(function(e) {return isNiceStringPart2(e);}).length); //51
