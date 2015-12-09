@@ -16,8 +16,6 @@ input.split('\n').forEach(function(route) {
     routes[destination][origin] = distance;
 });
 
-console.log(routes);
-
 var locations = Object.keys(routes);
 var max = 0;
 var min = Number.MAX_VALUE;
