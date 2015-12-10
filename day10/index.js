@@ -21,14 +21,12 @@ function lookAndSay(num) {
     return result;
 }
 
-function getIteration(iteration, num) {
-    var result = lookAndSay(num);
-
-    if(iteration > 1) {
-        return getIteration(--iteration, result);
+function getIteration(iterations, num) {
+    for(var i = 0; i < iterations; i++) {
+        num = lookAndSay(num);
     }
 
-    return result;
+    return num;
 }
 
 var part1 = getIteration(40, input);
