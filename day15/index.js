@@ -1,8 +1,8 @@
 var input = require('../input')(15);
-var amounts = require('./amounts');
 
 var r = /(\w+): capacity (-?\d+), durability (-?\d+), flavor (-?\d+), texture (-?\d+), calories (-?\d+)/i;
 var ingredients = {};
+var proportions = [];
 
 input.split('\n').forEach(function(ingredient) {
     var s = r.exec(ingredient);
@@ -16,6 +16,15 @@ input.split('\n').forEach(function(ingredient) {
         amount: 0
     };
 });
+
+for(var i = 1; i < 100; i++) {
+    for(var j = 1; j < 100 - i; j++) {
+        for(var k = 1; k < 100 - i - j; k++) {
+            var p = [i, j, k, 100 - (i + j + k)];
+            proportions.push(p);
+        }
+    }
+}
 
 function getCookieTotal(ingredients) {
     var c = 0;
@@ -56,10 +65,9 @@ function setAmounts(ingredients, amounts) {
 var max = 0;
 var amount;
 
-while(amounts.hasNext()) {
-    amount = amounts.next();
-    setAmounts(ingredients, amount);
+proportions.forEach(function(amounts) {
+    setAmounts(ingredients, amounts);
     max = Math.max(max, getCookieTotal(ingredients));
-}
+});
 
 console.log(max);
