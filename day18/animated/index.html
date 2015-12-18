@@ -6,12 +6,13 @@
     <style type="text/css">
         canvas {
             border: 1px solid #aaa;
+            background-color: black;
         }
     </style>
 </head>
 <body>
     
-    <canvas id="canvas" width="100" height="100"></canvas>
+    <canvas id="canvas" width="800" height="800"></canvas>
 
     <textarea id="indata" style="display: none">
 ####.#.##.###.#.#.##.#..###.#..#.#.#..##....#.###...##..###.##.#.#.#.##...##..#..#....#.#.##..#...##
@@ -183,9 +184,10 @@
                 for(var j = 0; j < size; j++) {
                     var state = getLightState(i, j, grid, getNeighbors(i, j, grid));
                     if(state === '#') {
-                        context.fillRect(i, j, 1, 1);
+                        context.fillStyle = getRandomColor();
+                        context.fillRect(i*8, j*8, 8, 8);
                     } else {
-                        context.clearRect(i, j, 1, 1);
+                        context.clearRect(i*8, j*8, 8, 8);
                     }
                     newGrid[i][j] = state;
                 }
@@ -215,6 +217,13 @@
 
         function draw() {
             grid = setState(grid);
+        }
+
+        function getRandomColor() {
+            var colors = ['#D9A441', '#A8A8A8', '#FF2B39', '#32FF2B', '#FFFDF7'];
+            var color = colors[Math.floor(Math.random()*colors.length)];
+
+            return color;
         }
     </script>
 </body>
