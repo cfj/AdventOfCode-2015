@@ -27,3 +27,11 @@ function findSums(numbers, targetSum, partial) {
 findSums(numbers, 150);
 
 console.log(found.length);
+
+var lengths = found.map(function(s) {
+    return s.length;
+});
+
+var minLength = Math.min.apply(this, lengths);
+
+console.log(minLength);
