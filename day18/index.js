@@ -48,7 +48,7 @@ function getNeighbors(x, y, grid) {
     return neighbors;
 }
 
-function animate(steps, grid) {
+function animate(grid) {
     var size = grid.length;
     var newGrid = [];
 
@@ -56,27 +56,27 @@ function animate(steps, grid) {
         newGrid[i] = Array.apply(null, Array(size)).map(Number.prototype.valueOf, 0);
     }
 
-    if(steps >= 0) {
-        for(var s = 0; s < steps; s++) {
-            for(var i = 0; i < size; i++) {
-                for(var j = 0; j < size; j++) {
-                    newGrid[i][j] = getLightState(i, j, grid, getNeighbors(i, j, grid));
-                }
-            }
+    for(var i = 0; i < size; i++) {
+        for(var j = 0; j < size; j++) {
+            newGrid[i][j] = getLightState(i, j, grid, getNeighbors(i, j, grid));
         }
+    }
 
-        var totalOn = grid.map(function(row) {
-            return row.filter(function(state) {
-                return state === '#';
-            }).length;
-        }).reduce(function(p, c) {return p + c});
+    return newGrid;
+}
 
-        lightsOn.push(totalOn);
-
-        animate(--steps, newGrid);
+function setGridToStep(step) {
+    for(var i = 0; i < step; i++) {
+        grid = animate(grid);
     }
 }
 
-animate(100, grid);
+setGridToStep(100);
 
-console.log(lightsOn.pop());
+var totalOn = grid.map(function(row) {
+    return row.filter(function(state) {
+        return state === '#';
+    }).length;
+}).reduce(function(p, c) {return p + c});
+
+console.log(totalOn);
