@@ -1,6 +1,5 @@
 var input = require('../input')(18);
 var grid = [];
-var lightsOn = [];
 
 input.split('\r\n').forEach(function(line, i) {
     grid[i] = line.split('');
