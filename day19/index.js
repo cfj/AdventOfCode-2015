@@ -1,8 +1,9 @@
-var input = require('../input')(19);
+var input = require('../input')('testinput');
 
-var molecule = 'CRnCaCaCaSiRnBPTiMgArSiRnSiRnMgArSiRnCaFArTiTiBSiThFYCaFArCaCaSiThCaPBSiThSiThCaCaPTiRnPBSiThRnFArArCaCaSiThCaSiThSiRnMgArCaPTiBPRnFArSiThCaSiRnFArBCaSiRnCaPRnFArPMgYCaFArCaPTiTiTiBPBSiThCaPTiBPBSiRnFArBPBSiRnCaFArBPRnSiRnFArRnSiRnBFArCaFArCaCaCaSiThSiThCaCaPBPTiTiRnFArCaPTiBSiAlArPBCaCaCaCaCaSiRnMgArCaSiThFArThCaSiThCaSiRnCaFYCaSiRnFYFArFArCaSiRnFYFArCaSiRnBPMgArSiThPRnFArCaSiRnFArTiRnSiRnFYFArCaSiRnBFArCaSiRnTiMgArSiThCaSiThCaFArPRnFArSiRnFArTiTiTiTiBCaCaSiRnCaCaFYFArSiThCaPTiBPTiBCaSiThSiRnMgArCaF';
+//var molecule = 'CRnCaCaCaSiRnBPTiMgArSiRnSiRnMgArSiRnCaFArTiTiBSiThFYCaFArCaCaSiThCaPBSiThSiThCaCaPTiRnPBSiThRnFArArCaCaSiThCaSiThSiRnMgArCaPTiBPRnFArSiThCaSiRnFArBCaSiRnCaPRnFArPMgYCaFArCaPTiTiTiBPBSiThCaPTiBPBSiRnFArBPBSiRnCaFArBPRnSiRnFArRnSiRnBFArCaFArCaCaCaSiThSiThCaCaPBPTiTiRnFArCaPTiBSiAlArPBCaCaCaCaCaSiRnMgArCaSiThFArThCaSiThCaSiRnCaFYCaSiRnFYFArFArCaSiRnFYFArCaSiRnBPMgArSiThPRnFArCaSiRnFArTiRnSiRnFYFArCaSiRnBFArCaSiRnTiMgArSiThCaSiThCaFArPRnFArSiRnFArTiTiTiTiBCaCaSiRnCaCaFYFArSiThCaPTiBPTiBCaSiThSiRnMgArCaF';
+var molecule = 'HOHOHO';
+
 var replacements = {};
-var variants = {};
 
 input.split('\r\n').forEach(function(line) {
     var parts = line.split(' => ');
@@ -11,33 +12,47 @@ input.split('\r\n').forEach(function(line) {
     replacements[parts[0]].into.push(parts[1]);
 });
 
-//console.log(replacements);
+function getAllVariations(startingMolecule, possibleReplacements) {
+    var distinctMolecules = {};
+    
+    for(var element in possibleReplacements) {
+        possibleReplacements[element].into.forEach(function(d) {
+            var n = new RegExp(element, 'g');
 
-for(var m in replacements) {
+            if(molecule.match(n)) {
+                for(var i = 1; i <= molecule.match(n).length; i++) {
+                    var str = replaceNthOccurrence(molecule, i, element, d);
+                    distinctMolecules[str] = distinctMolecules[str] || 1;
+                }
+            }
+        });
+    }
 
-    replacements[m].into.forEach(function(d) {
-        //console.log(m + ' can be replaced with: ' + d);
-        var reg = new RegExp(m, 'g');
-        var replaceReg = new RegExp(m);
-        var matches;
+    return distinctMolecules;
+}
+
+function replaceNthOccurrence(str, n, occurrence, replaceStr) {
+    if(str.indexOf(occurrence) === -1) {
+        return str;
+    }
+
+    var reg = new RegExp(occurrence, 'g');
+    var nth = 0;
+
+    var s = str.replace(reg, function (match, i, original) {
+        nth++;
+        return (nth === n) ? replaceStr : match;
     });
+
+    return s;
 }
 
-function getVariations(str, replacement) {
-
+function getVariations(target, variations, replacements) {
+    if(!(target in variations)) {
+        variations = getAllVariations()
+    }
 }
 
-//console.log(Object.keys(variants).length);
+console.log(getAllVariations('e', replacements));
 
-
-var test = 'agbbbbbbbagbbbbbbbag';
-
-var reg = new RegExp('ag', 'g');
-var rep = new RegExp('a');
-var match;
-
-while((match = reg.exec(test)) !== null) {
-    var msg = 'Found ' + match[0] + '. ';
-    msg += 'Next match starts at ' + match.index + ' ' + reg.lastIndex;
-    console.log(msg);
-}
+//console.log('Part 1:', Object.keys(getAllVariations(molecule, replacements)).length);
